@@ -21,6 +21,8 @@ def decode_review(encoded_review):
 def preprocess_text(text):
     words = text.lower().split()
     encoded_review = [word_index.get(word, 2) + 3 for word in words]
+    # Ensure indices are within the vocabulary size (10000) used by the model
+    encoded_review = [val if val < 10000 else 2 for val in encoded_review]
     padded_review = sequence.pad_sequences([encoded_review], maxlen=500)
     return padded_review
 
